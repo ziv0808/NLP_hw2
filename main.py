@@ -102,7 +102,7 @@ for n in range(NUM_OF_PERCEPTRON_STEPS):
                 basic_feature_weights_vec[feat_idx] -= 1
 
     print ('Finised step after ' + str(time.time() - t_init) + ' Seconds from begining ...')
-    if (n+1)%20 == 0:
+    if (n+1) in [20,50,80]:
         # calculating train error
         pred_train_heads_list = []
         for k in range(len(sent_word_list)):

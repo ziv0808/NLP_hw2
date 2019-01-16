@@ -215,11 +215,11 @@ def create_comp_flie(
     out_str = ''
 
     for i in range(1,len(comp_words)):
-        if comp_words == 'ROOT':
+        if comp_words[i] == 'ROOT':
             out_str += '\n'
             continue
         out_str += str(i) + '\t' + comp_words[i] + '\t' + '_' + comp_pos[i] + '\t' + '_' + '\t' + '_'
-        out_str += '\t' + comp_heads[i] + '\t' + '_' + '\t' + '_' + '\t' + '_' + '\n'
+        out_str += '\t' + str(comp_heads[i]) + '\t' + '_' + '\t' + '_' + '\t' + '_' + '\n'
     if basic == True:
         with open('comp_m1_302557541.wtag', 'w')as f:
             f.write(out_str)
