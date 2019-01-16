@@ -1,7 +1,7 @@
 import time
 import pickle
 import numpy as np
-from Features import Featues
+from Features import Features
 from chu_liu import Digraph
 from preprocess import read_file_and_preprocess
 from utils import create_sentences_from_word_lists
@@ -17,11 +17,13 @@ from utils import create_comp_flie
 
 NUM_OF_PERCEPTRON_STEPS = 80
 # if BASIC_MODEL = False then the complex model will be created
-BASIC_MODEL = False
+BASIC_MODEL = True
 # if TRAIN_WITH_MST = False then for training the perceptron will use the greedy method - faster
 TRAIN_WITH_MST = True
 
 max_accuracy = 0.83
+if BASIC_MODEL == True:
+    max_accuracy = 0.74
 # load train file
 train_words, train_pos, train_heads = read_file_and_preprocess('train.labeled', include_y=True)
 
@@ -29,10 +31,10 @@ train_words, train_pos, train_heads = read_file_and_preprocess('train.labeled', 
 sent_word_list, sent_pos_list, sent_head_list = create_sentences_from_word_lists(train_words, train_pos, train_heads)
 if True == BASIC_MODEL:
     # create features instance for basic model
-    featurs_basic_obj = Featues(train_words, train_pos, train_heads, features_to_include_list=[1,2,3,4,5,6,8,10,13])
+    featurs_basic_obj = Features(train_words, train_pos, train_heads, features_to_include_list=[1,2,3,4,5,6,8,10,13])
 else:
     # creates features for the complex model
-    featurs_basic_obj = Featues(train_words, train_pos, train_heads, features_to_include_list='ALL')
+    featurs_basic_obj = Features(train_words, train_pos, train_heads, features_to_include_list='ALL')
 
 # init weight vector
 basic_feature_weights_vec = np.zeros(featurs_basic_obj.feature_wieghts_len, dtype=np.float64)
@@ -146,6 +148,7 @@ for n in range(NUM_OF_PERCEPTRON_STEPS):
         print ('Test:')
         score = get_results_accuracy(test_heads[:-1], pred_test_heads_list)
         if score > max_accuracy:
+            max_accuracy = score
             print ('Tagging comp file...')
             # compatition files tagging
             # comp model

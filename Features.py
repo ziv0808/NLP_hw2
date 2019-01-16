@@ -2,7 +2,7 @@ import numpy as np
 from utils import get_word_form
 from utils import is_vb_in
 
-class Featues():
+class Features():
     def __init__(
             self,
             words_list,
